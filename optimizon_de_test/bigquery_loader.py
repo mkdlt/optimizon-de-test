@@ -1,6 +1,6 @@
 from google.cloud import bigquery
 
-def load_csv_to_bigquery(gcs_uri: str, table_id: str):
+def load_csv_to_raw_layer(gcs_uri: str, table_id: str):
     client = bigquery.Client()
 
     schema = [

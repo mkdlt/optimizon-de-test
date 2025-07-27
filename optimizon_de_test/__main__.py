@@ -1,6 +1,9 @@
 import config
+import random
+from datetime import datetime
 from optimizon_de_test.gcs_uploader import stream_upload_to_gcs
-from optimizon_de_test.bigquery_loader import load_csv_to_bigquery
+from optimizon_de_test.bigquery_loader import load_csv_to_raw_layer
+from optimizon_de_test.sql_runner import clean_raw_data, get_metrics
 
 CSV_URL = (
     "https://storage.googleapis.com/nozzle-csv-exports/testing-data/"
@@ -10,20 +13,29 @@ CSV_URL = (
 def main():
     print('Starting pipeline...')
 
+    file_id = generate_file_id()
+
     # gcs_uri = 'gs://optimizon-de-test-data/streaming_test.csv'
     
     gcs_uri = stream_upload_to_gcs(
         csv_url=CSV_URL,
         bucket_name=config.GCS_BUCKET,
-        blob_name="streaming_test.csv"
+        blob_name=f"{file_id}.csv"
     )
 
-    table_id=f"{config.GCP_PROJECT}.{config.BQ_DATASET}.loading_test"
+    raw_table_id=f"{config.GCP_PROJECT}.raw.{file_id}"
 
-    load_csv_to_bigquery(
+    load_csv_to_raw_layer(
         gcs_uri=gcs_uri,
-        table_id=table_id
+        raw_table_id=raw_table_id
     )
+
+def generate_file_id() -> str:
+    timestamp = datetime.now().strftime('%y%m%d%H%M%S')
+    random_base64 = f'{random.randrange(16**4):04x}'
+
+    return f'sales_data_{timestamp}_{random_base64}'
+
 
 if __name__ == "__main__":
     main()
