@@ -1,8 +1,10 @@
 import config
 from optimizon_de_test.gcs_uploader import stream_upload_to_gcs
 
-CSV_URL = "https://storage.googleapis.com/nozzle-csv-exports/testing-data/" \
+CSV_URL = (
+    "https://storage.googleapis.com/nozzle-csv-exports/testing-data/"
     "order_items_data_1_.csv"
+)
 
 def main():
     print('Starting pipeline...')
