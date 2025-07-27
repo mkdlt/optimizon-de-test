@@ -1,6 +1,6 @@
 from google.cloud import bigquery
 
-def load_csv_to_raw_layer(gcs_uri: str, table_id: str):
+def load_csv_to_raw_layer(gcs_uri: str, raw_table_id: str):
     client = bigquery.Client()
 
     schema = [
@@ -32,14 +32,21 @@ def load_csv_to_raw_layer(gcs_uri: str, table_id: str):
         max_bad_records=1000
     )
 
-    print(f"Loading {gcs_uri} into {table_id}")
+    print(f"Loading {gcs_uri} into {raw_table_id}")
 
-    load_job = client.load_table_from_uri(
-        gcs_uri, table_id, job_config=job_config
+    job = client.load_table_from_uri(
+        gcs_uri, raw_table_id, job_config=job_config
     )
 
-    load_job.result()
+    job.result()
 
-    destination_table = client.get_table(table_id)
-    print(f"Loaded {destination_table.num_rows} rows")
+    destination_table = client.get_table(raw_table_id)
+
+    load_time = job.ended - job.started
+    num_rows = destination_table.num_rows
+    
+    print(f'Loaded {destination_table.num_rows} rows')
+    print(f'Loading time: {load_time}s')
+
+    return load_time, num_rows
 
