@@ -46,7 +46,7 @@ def load_csv_to_raw_layer(gcs_uri: str, raw_table_id: str):
     num_rows = destination_table.num_rows
     
     print(f'Loaded {destination_table.num_rows} rows')
-    print(f'Loading time: {load_time}s')
+    print(f'Loading time: {load_time}')
 
     return load_time, num_rows
 

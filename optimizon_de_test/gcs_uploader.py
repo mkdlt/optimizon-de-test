@@ -1,5 +1,6 @@
 
 from time import perf_counter
+from datetime import timedelta
 
 import requests
 from google.cloud import storage
@@ -32,6 +33,6 @@ def upload_csv_to_gcs(
     upload_time = end_time - start_time
 
     print(f"Streamed upload completed: gs://{bucket_name}/{blob_name}")
-    print(f"Time elapsed: {upload_time:.2f}s")
+    print(f"Upload time: {str(timedelta(seconds=upload_time))}")
 
     return upload_time
