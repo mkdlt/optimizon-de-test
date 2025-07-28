@@ -35,11 +35,21 @@ def main():
         clean_table_id=clean_table_id
     )
 
+    metrics = get_metrics(clean_table_id=clean_table_id)
+
+    write_metrics(file_id, metrics)
+
+    print(f'Wrote metrics to output/metrics_{file_id}.json')
+
 def generate_file_id() -> str:
     timestamp = datetime.now().strftime('%y%m%d_%H%M%S')
     random_base64 = f'{random.randrange(16**4):04x}'
 
     return f'order_items_{timestamp}_{random_base64}'
+
+def write_metrics(file_id: str, metrics: dict) -> None:
+    with open(f"output/metrics_{file_id}.json", "w") as f:
+        json.dump(metrics, f, indent=2)
 
 if __name__ == "__main__":
     main()
