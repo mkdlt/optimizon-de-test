@@ -1,18 +1,23 @@
 import config
 import random
+import json
+import argparse
+import os
 from datetime import datetime
 from optimizon_de_test.gcs_uploader import upload_csv_to_gcs
 from optimizon_de_test.bigquery_loader import load_csv_to_raw_layer
-from optimizon_de_test.sql_runner import clean_raw_data
+from optimizon_de_test.sql_runner import clean_raw_data, get_metrics
 
-CSV_URL = (
-    "https://storage.googleapis.com/nozzle-csv-exports/testing-data/"
-    "order_items_data_1_.csv"
-)
+
 
 def main():
-    # file_id = generate_file_id()
-    file_id = 'order_items_250728_020036_e771'
+    parser = argparse.ArgumentParser(description="Run the data pipeline.")
+    parser.add_argument("csv_url", help="URL of the CSV file to process")
+
+    args = parser.parse_args()
+    csv_url = args.csv_url
+    
+    file_id = generate_file_id()
     gcs_uri = f'gs://{config.GCS_BUCKET}/{file_id}.csv'
     raw_table_id = f'{config.GCP_PROJECT}.raw.{file_id}'
     clean_table_id = f'{config.GCP_PROJECT}.clean.{file_id}'
