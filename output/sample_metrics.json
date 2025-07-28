@@ -1,0 +1,78 @@
+{
+  "metrics_monthly": {
+    "end_date": "2025-05-01",
+    "group_by": "month",
+    "metrics": [
+      {
+        "grand_total": 69878514.68,
+        "gross_sales": 80354600.83,
+        "least_popular_product_sku": "CNq-00363112",
+        "most_popular_product_sku": "tgF-01317636",
+        "net_sales": 54114464.1,
+        "period": "2025-01-01",
+        "total_orders": 207033
+      },
+      {
+        "grand_total": 62941451.48,
+        "gross_sales": 72392303.22,
+        "least_popular_product_sku": "dAg-65203594",
+        "most_popular_product_sku": "ccp-24819557",
+        "net_sales": 48741474.86,
+        "period": "2025-02-01",
+        "total_orders": 186578
+      },
+      {
+        "grand_total": 70061032.52,
+        "gross_sales": 80563487.77,
+        "least_popular_product_sku": "fDQ-79436990",
+        "most_popular_product_sku": "amB-95367729",
+        "net_sales": 54258845.89,
+        "period": "2025-03-01",
+        "total_orders": 207635
+      },
+      {
+        "grand_total": 67612921.46,
+        "gross_sales": 77760848.52,
+        "least_popular_product_sku": "JnV-31918656",
+        "most_popular_product_sku": "uxm-68468202",
+        "net_sales": 52357028.19,
+        "period": "2025-04-01",
+        "total_orders": 200676
+      },
+      {
+        "grand_total": 69939205.88,
+        "gross_sales": 80429617.96,
+        "least_popular_product_sku": "ccp-24819557",
+        "most_popular_product_sku": "fDQ-79436990",
+        "net_sales": 54170612.75,
+        "period": "2025-05-01",
+        "total_orders": 207632
+      }
+    ],
+    "start_date": "2025-01-01"
+  },
+  "metrics_yearly": {
+    "end_date": "2025-01-01",
+    "group_by": "year",
+    "metrics": [
+      {
+        "grand_total": 340433126.02,
+        "gross_sales": 391500858.3,
+        "least_popular_product_sku": "CNq-00363112",
+        "most_popular_product_sku": "uxm-68468202",
+        "net_sales": 263642425.79,
+        "period": "2025-01-01",
+        "total_orders": 1009554
+      }
+    ],
+    "start_date": "2025-01-01"
+  },
+  "grand_totals": {
+    "grand_total": 340433126.02,
+    "gross_sales": 391500858.3,
+    "least_popular_product_sku": "CNq-00363112",
+    "most_popular_product_sku": "uxm-68468202",
+    "net_sales": 263642425.79,
+    "total_orders": 1009554
+  }
+}
