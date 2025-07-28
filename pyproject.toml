@@ -1,7 +1,7 @@
 [project]
 name = "optimizon-de-test"
 version = "0.1.0"
-description = "Add your description here"
+description = "CLI tool for processing sales data CSVs"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
