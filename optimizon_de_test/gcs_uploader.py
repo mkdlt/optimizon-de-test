@@ -7,9 +7,7 @@ import re
 import requests
 from google.cloud import storage
 
-STARTS_WITH_ORDER_ID = re.compile(
-    r"^[\"]?[a-f0-9€]{4}"
-)
+STARTS_WITH_ORDER_ID = re.compile(r"^[\"]?[a-f0-9€]{4}")
 
 def upload_csv_to_gcs(
         csv_url: str,
@@ -59,7 +57,6 @@ def upload_csv_to_gcs(
                         keep_stream.writelines(keep_buffer)
                         keep_buffer.clear()
                         keep_count = 0
-                        print(f'Lines kept so far: {total_keep}')
                 else:
                     drop_buffer.append(line + '\n')
                     drop_count += 1
@@ -68,7 +65,6 @@ def upload_csv_to_gcs(
                         drop_stream.writelines(drop_buffer)
                         drop_buffer.clear()
                         drop_count = 0
-                        print(f'Lines dropped so far: {total_drop}')
 
             if split_line_buffer:
                 keep_buffer.append(split_line_buffer + '\n')
@@ -85,12 +81,18 @@ def upload_csv_to_gcs(
     upload_time = end_time - start_time
 
     print(f"Streamed upload completed: gs://{bucket_name}/{file_id}.csv")
-    print(f"Upload time: {str(timedelta(seconds=upload_time))}")
+    print(f"Upload time: {timedelta(seconds=upload_time)}")
     print(f"Kept/merged lines: {total_keep}")
     print(f"Dropped lines: {total_drop}")
     print(f"Total lines processed: {total_lines}")
 
-    return upload_time
+    upload_stats = {
+        'upload_time': upload_time,
+        'kept_lines': total_keep,
+        'dropped_lines': total_drop
+    }
+
+    return upload_stats
 
 def is_empty_line(line):
     valid_line_re = re.compile(r"[a-zA-Z0-9]+")

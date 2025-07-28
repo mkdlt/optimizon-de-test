@@ -19,18 +19,18 @@ def main():
 
     print(f'Starting pipeline. Assigned id: {file_id}')
 
-    upload_time = upload_csv_to_gcs(
-        csv_url=CSV_URL,
+    upload_stats = upload_csv_to_gcs(
+        csv_url=csv_url,
         bucket_name=config.GCS_BUCKET,
-        blob_name=f'{file_id}.csv'
+        file_id=file_id
     )
 
-    load_time, num_rows = load_csv_to_raw_layer(
+    load_stats = load_csv_to_raw_layer(
         gcs_uri=gcs_uri,
         raw_table_id=raw_table_id
     )
 
-    clean_time = clean_raw_data(
+    clean_stats = clean_raw_data(
         raw_table_id=raw_table_id,
         clean_table_id=clean_table_id
     )
