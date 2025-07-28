@@ -4,7 +4,7 @@ def load_csv_to_raw_layer(gcs_uri: str, raw_table_id: str):
     client = bigquery.Client()
 
     schema = [
-        bigquery.SchemaField("order_id", "STRING", mode="REQUIRED"),
+        bigquery.SchemaField("order_id", "STRING"),
         bigquery.SchemaField("purchased_at", "STRING"),
         bigquery.SchemaField("purchased_date", "STRING"),
         bigquery.SchemaField("purchased_month_ended", "STRING"),
@@ -29,7 +29,9 @@ def load_csv_to_raw_layer(gcs_uri: str, raw_table_id: str):
         source_format=bigquery.SourceFormat.CSV,
         skip_leading_rows=1,
         allow_quoted_newlines=True,
-        max_bad_records=1000
+        max_bad_records=10000,
+        allow_jagged_rows=True,
+        ignore_unknown_values=True
     )
 
     print(f"Loading raw data into {raw_table_id}")
@@ -38,7 +40,11 @@ def load_csv_to_raw_layer(gcs_uri: str, raw_table_id: str):
         gcs_uri, raw_table_id, job_config=job_config
     )
 
-    job.result()
+    try:
+        job.result()
+    except:
+        for error in job.errors:
+            print(error)
 
     raw_table = client.get_table(raw_table_id)
 
